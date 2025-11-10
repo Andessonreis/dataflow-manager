@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataFlow Manager</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>🧭 DataFlow Manager</h1>
+
+    <div class="crud-container">
+      <section class="crud-section">
+        <h2>1. DataSources (Fontes de Dados)</h2>
+
+        <form id="dataSourceForm">
+          <h3 id="dsFormTitle" style="grid-column: 1 / -1">Novo DataSource</h3>
+          <input type="hidden" id="dsId" />
+          <div>
+            <label for="dsName">Nome</label>
+            <input
+              type="text"
+              id="dsName"
+              name="dsName"
+              required
+              placeholder="Ex: Meu Banco H2 Local"
+            />
+          </div>
+          <div>
+            <label for="dsType">Tipo</label>
+            <select id="dsType" name="dsType" required>
+              <option value="DATABASE">DATABASE</option>
+              <option value="API">API</option>
+              <option value="FILE">FILE</option>
+            </select>
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="dsConnectionUri">URI de Conexão</label>
+            <input
+              type="text"
+              id="dsConnectionUri"
+              name="dsConnectionUri"
+              required
+              placeholder="Ex: jdbc:postgresql://user:pass@host/db"
+              value="jdbc:h2:mem:testdb"
+            />
+          </div>
+          <div class="form-actions">
+            <button type="submit">Salvar</button>
+            <button type="button" id="dsCancel">Cancelar/Limpar</button>
+          </div>
+        </form>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>URI</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="dataSourceTableBody">
+            </tbody>
+        </table>
+      </section>
+
+      <section class="crud-section">
+        <h2>2. Pipelines</h2>
+
+        <form id="pipelineForm">
+          <h3 id="plFormTitle" style="grid-column: 1 / -1">Novo Pipeline</h3>
+          <input type="hidden" id="plId" />
+          <div>
+            <label for="plName">Nome</label>
+            <input
+              type="text"
+              id="plName"
+              name="plName"
+              required
+              placeholder="Ex: Pipeline de Vendas Diárias"
+            />
+          </div>
+          <div>
+            <label for="plSchedule">Schedule (Cron)</label>
+            <input
+              type="text"
+              id="plSchedule"
+              name="plSchedule"
+              required
+              value="0 0 * * *"
+              placeholder="Ex: 0 0 * * *"
+            />
+          </div>
+          <div>
+            <label for="plStatus">Status</label>
+            <select id="plStatus" name="plStatus" required>
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="PAUSED">PAUSED</option>
+            </select>
+          </div>
+          <div>
+            <label for="plSourceId">DataSource</label>
+            <select id="plSourceId" name="plSourceId" required>
+              </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Salvar</button>
+            <button type="button" id="plCancel">Cancelar/Limpar</button>
+          </div>
+        </form>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Schedule</th>
+              <th>Status</th>
+              <th>Source ID</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="pipelineTableBody">
+            </tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="crud-section" style="flex-basis: 100%">
+      <h2>3. Job Runs (Execuções)</h2>
+
+      <form id="jobRunFilterForm">
+        <div>
+          <label for="filterPipelineId">Filtrar por Pipeline ID</label>
+          <input
+            type="text"
+            id="filterPipelineId"
+            name="filterPipelineId"
+            placeholder="Cole um ID de pipeline aqui..."
+          />
+        </div>
+        <div>
+          <label for="filterStatus">Filtrar por Status</label>
+          <select id="filterStatus" name="filterStatus">
+            <option value="">Todos</option>
+            <option value="PENDING">PENDING</option>
+            <option value="RUNNING">RUNNING</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="FAILED">FAILED</option>
+            <option value="CANCELLED">CANCELLED</option>
+          </select>
+        </div>
+      </form>
+
+      <table style="table-layout: fixed">
+        <thead>
+          <tr>
+            <th style="width: 10%">Status</th>
+            <th style="width: 10%">Pipeline ID</th>
+            <th style="width: 15%">Início</th>
+            <th style="width: 15%">Fim</th>
+            <th style="width: 8%">Sucesso</th>
+            <th style="width: 42%">Logs</th>
+          </tr>
+        </thead>
+        <tbody id="jobRunTableBody">
+          </tbody>
+      </table>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>

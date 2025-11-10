@@ -5,12 +5,14 @@ import java.util.UUID;
 import io.andesson.dataflowmanager.features.dataSource.domain.enums.DataSourceType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents an external data source configuration.
@@ -35,6 +37,9 @@ import lombok.Data;
  * @author Andesson Reis
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "data_sources")
 @Entity
 public class DataSource {
 
